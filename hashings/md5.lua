@@ -134,7 +134,7 @@ end
 
 function M:new(data)
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
     local o = setmetatable({}, M_mt)
 
@@ -146,7 +146,7 @@ function M:new(data)
     o._data = ""
 
     if data ~= nil then
-    	o:update(data)
+        o:update(data)
     end
 
     return o
@@ -168,15 +168,15 @@ function M:update(data)
     local X
 
     if data == nil then
-    	data = ""
+        data = ""
     end
 
-	data = tostring(data)
-	self._len = self._len + #data
+    data = tostring(data)
+    self._len = self._len + #data
     self._data = self._data .. data
 
     while #self._data >= 64 do
-    	X = {}
+        X = {}
         for j=1,64,4 do
             X[#X+1] = string.byte(self._data, j+3) << 24 |
             string.byte(self._data, j+2) << 16 |
@@ -199,9 +199,9 @@ function M:digest()
 
     padlen = final._len % 64
     if padlen < 56 then
-    	padlen = 56 - padlen
+        padlen = 56 - padlen
     else
-    	padlen = 120 - padlen
+        padlen = 120 - padlen
     end
 
     len = final._len * 8
@@ -230,7 +230,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

@@ -585,8 +585,8 @@ local function load_block(cs)
     local k
 
     for i=1,M.block_size,8 do
-    	j = i//8+1
-    	k = ((i//8)*8)+1
+        j = i//8+1
+        k = ((i//8)*8)+1
         block[j] =
             (u64(string.byte(cs._data, k)) << 56 ~
             u64(string.byte(cs._data, k+1)) << 48 ~
@@ -604,19 +604,19 @@ end
 
 function M:new(data)
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
     local o = setmetatable({}, M_mt)
 
     o._hash = {}
     for i=1,8 do
-    	o._hash[i] = u64(0)
+        o._hash[i] = u64(0)
     end
     o._len = u256(0)
     o._data = ""
 
     if data ~= nil then
-    	o:update(data)
+        o:update(data)
     end
 
     return o
@@ -626,7 +626,7 @@ setmetatable(M, { __call = M.new })
 function M:copy()
     local o = M:new()
     for i=1,8 do
-    	o._hash[i] = self._hash[i]:copy()
+        o._hash[i] = self._hash[i]:copy()
     end
     o._data = self._data
     o._len = self._len:copy()
@@ -640,7 +640,7 @@ function M:update(data)
     local L = {}
 
     if data == nil then
-    	data = ""
+        data = ""
     end
 
     data = tostring(data)
@@ -648,16 +648,16 @@ function M:update(data)
     self._data = self._data .. data
 
     while #self._data >= M.block_size do
-    	block = load_block(self)
+        block = load_block(self)
 
-    	K[1] = self._hash[1]:copy()
-    	K[2] = self._hash[2]:copy()
-    	K[3] = self._hash[3]:copy()
-    	K[4] = self._hash[4]:copy()
-    	K[5] = self._hash[5]:copy()
-    	K[6] = self._hash[6]:copy()
-    	K[7] = self._hash[7]:copy()
-    	K[8] = self._hash[8]:copy()
+        K[1] = self._hash[1]:copy()
+        K[2] = self._hash[2]:copy()
+        K[3] = self._hash[3]:copy()
+        K[4] = self._hash[4]:copy()
+        K[5] = self._hash[5]:copy()
+        K[6] = self._hash[6]:copy()
+        K[7] = self._hash[7]:copy()
+        K[8] = self._hash[8]:copy()
 
         state[1] = block[1] ~ K[1]
         state[2] = block[2] ~ K[2]
@@ -867,7 +867,7 @@ function M:digest()
         final._data = final._data .. string.rep(string.char(0), 64-#final._data)
         padlen = 64-#final._data + 32;
     else
-    	padlen = 32 - #final._data
+        padlen = 32 - #final._data
     end
 
     final._data = final._data ..
@@ -877,7 +877,7 @@ function M:digest()
     final:update()
 
     for i=1,#final._hash do
-    	out[i] = final._hash[i]:asbytestring()
+        out[i] = final._hash[i]:asbytestring()
     end
 
     return table.concat(out)
@@ -889,7 +889,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

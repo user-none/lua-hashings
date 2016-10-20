@@ -71,7 +71,7 @@ function M:new(alg, data)
 
     a = alg_map[alg]
     if a == nil then
-    	return nil
+        return nil
     end
     return a:new(data)
 end

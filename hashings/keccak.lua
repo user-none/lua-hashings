@@ -67,8 +67,8 @@ local rotation_constants = {
 
 --[[
 for i=0,24,5 do
-	for j=0,4 do
-		print(((j+1)%5)+i, ((j+2)%5)+i)
+    for j=0,4 do
+        print(((j+1)%5)+i, ((j+2)%5)+i)
     end
 end
 ]]--
@@ -113,8 +113,8 @@ local function load_block(cs)
     local k
 
     for i=1,cs._block_size,8 do
-    	j = i//8+1
-    	k = ((i//8)*8)+1
+        j = i//8+1
+        k = ((i//8)*8)+1
         cs._s[j] = cs._s[j] ~ 
             (u64(string.byte(cs._data, k)) |
             u64(string.byte(cs._data, k+1)) << 8 |
@@ -133,13 +133,13 @@ local function permute_theta(s)
     local t
 
     for i=1,5 do
-    	B[i] = s[i] ~ s[i+5] ~ s[i+10] ~ s[i+15] ~ s[i+20]
+        B[i] = s[i] ~ s[i+5] ~ s[i+10] ~ s[i+15] ~ s[i+20]
     end
 
     for i=1,5 do
-    	t = B[theta_idxs[i][1]] ~ rotate_left(B[theta_idxs[i][2]], 1)
+        t = B[theta_idxs[i][1]] ~ rotate_left(B[theta_idxs[i][2]], 1)
         for j=i,25,5 do
-        	s[j] = s[j] ~ t
+            s[j] = s[j] ~ t
         end
     end
 end
@@ -164,7 +164,7 @@ local function permute_chi(s)
     end
 
     for i=1,25 do
-    	s[i] = s[i] ~ (~B[chi_idxs[i][1]] & B[chi_idxs[i][2]])
+        s[i] = s[i] ~ (~B[chi_idxs[i][1]] & B[chi_idxs[i][2]])
     end
 end
 
@@ -174,11 +174,11 @@ end
 
 function M:new(block_size, digest_size, data)
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
 
     if block_size > 200 then
-    	return nil, "Invalid block size"
+        return nil, "Invalid block size"
     end
 
     local o = setmetatable({}, M_mt)
@@ -189,11 +189,11 @@ function M:new(block_size, digest_size, data)
 
     o._s = {}
     for i=1,25 do
-    	o._s[i] = u64(0)
+        o._s[i] = u64(0)
     end
 
     if data ~= nil then
-    	o:update(data)
+        o:update(data)
     end
 
     return o
@@ -209,7 +209,7 @@ function M:copy()
 
     o._s = {}
     for i=1,25 do
-    	o._s[i] = self._s[i]:copy()
+        o._s[i] = self._s[i]:copy()
     end
 
     return o
@@ -217,7 +217,7 @@ end
 
 function M:update(data)
     if data == nil then
-    	data = ""
+        data = ""
     end
 
     data = tostring(data)
@@ -243,7 +243,7 @@ function M:digest()
 
     -- Pad
     if #final._data == final._block_size - 1 then
-    	data = string.char(0x06|0x80)
+        data = string.char(0x06|0x80)
     else
         data = string.char(0x06) .. string.rep(string.char(0), final._block_size - #final._data - 2) .. string.char(0x80)
     end
@@ -252,7 +252,7 @@ function M:digest()
 
     -- Squeeze
     for i=1,final._digest_size//8 do
-    	out[i] = final._s[i]:swape():asbytestring()
+        out[i] = final._s[i]:swape():asbytestring()
     end
 
     return table.concat(out)
@@ -264,7 +264,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

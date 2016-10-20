@@ -29,27 +29,27 @@ function M:new(hm, key, data)
     local ipad = {}
 
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
     local o = setmetatable({}, M_mt)
     o._hm = hm
 
     -- Compute the key.
     if #key > hm.block_size then
-    	th = hm(key)
-    	key = th:digest()
+        th = hm(key)
+        key = th:digest()
     end
     for i=1,#key do
-    	tk[#tk+1] = string.byte(key, i)
+        tk[#tk+1] = string.byte(key, i)
     end
     for i=#key+1,hm.block_size do
-    	tk[#tk+1] = 0
+        tk[#tk+1] = 0
     end
 
     -- Generate the inner and outer padding.
     o._opad = {}
     for i=1,#tk do
-    	ipad[i] = string.char(tk[i] ~ 0x36)
+        ipad[i] = string.char(tk[i] ~ 0x36)
         o._opad[i] = string.char(tk[i] ~ 0x5C)
     end
     ipad = table.concat(ipad)
@@ -59,7 +59,7 @@ function M:new(hm, key, data)
     o._hash = o._hm(ipad)
 
     if data ~= nil then
-    	o._hash:update(data)
+        o._hash:update(data)
     end
 
     return o
@@ -97,7 +97,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

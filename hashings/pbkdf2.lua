@@ -30,13 +30,13 @@ local function sxor(s1, s2)
     local b3 = {}
 
     for i=1,#s1 do
-    	b1[#b1+1] = string.byte(s1, i)
+        b1[#b1+1] = string.byte(s1, i)
     end
     for i=1,#s2 do
-    	b2[#b2+1] = string.byte(s2, i)
+        b2[#b2+1] = string.byte(s2, i)
     end
     for i=1,#b1 do
-    	b3[#b3+1] = string.char(b1[i] ~ b2[i])
+        b3[#b3+1] = string.char(b1[i] ~ b2[i])
     end
 
     return table.concat(b3)
@@ -46,7 +46,7 @@ local function hexify(h)
     local out = {}
 
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end
@@ -58,8 +58,8 @@ function M:pbkdf2(hm, pass, salt, it)
     u = hmac(hm, pass, salt..u32(1):asbytestring()):digest()
     t = u
     for i=2,it do
-    	u = hmac(hm, pass, u):digest()
-    	t = sxor(t, u)
+        u = hmac(hm, pass, u):digest()
+        t = sxor(t, u)
     end
 
     return hexify(t)

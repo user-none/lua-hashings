@@ -37,8 +37,8 @@ Hash functions:
 }
 
 dependencies = {
-	   "lua >= 5.3",
-	   "lua-nums"
+       "lua >= 5.3",
+       "lua-nums"
 }
 
 build = {

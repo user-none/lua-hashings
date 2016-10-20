@@ -32,13 +32,13 @@ end
 
 function M:new(data)
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
     local o = setmetatable({}, M_mt)
     o._crc = u32(0xFFFFFFFF)
     
     if data ~= nil then
-    	o:update(data)
+        o:update(data)
     end
 
     return o
@@ -52,23 +52,23 @@ function M:copy()
 end
 
 function M:update(data)
-	local byte
-	local mask
+    local byte
+    local mask
 
     if data == nil then
-    	data = ""
+        data = ""
     end
 
-	data = tostring(data)
+    data = tostring(data)
 
-	for i=1,#data do
-		byte = string.byte(data, i)
-		self._crc  = self._crc ~ byte
-		for j=1,8 do
-			mask       = (self._crc & 1)*-1
-			self._crc  = (self._crc >> 1) ~ (0xEDB88320 & mask)
-		end
-	end
+    for i=1,#data do
+        byte = string.byte(data, i)
+        self._crc  = self._crc ~ byte
+        for j=1,8 do
+            mask       = (self._crc & 1)*-1
+            self._crc  = (self._crc >> 1) ~ (0xEDB88320 & mask)
+        end
+    end
 end
 
 function M:digest()
@@ -81,7 +81,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

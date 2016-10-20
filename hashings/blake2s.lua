@@ -53,7 +53,7 @@ end
 local function increment_counter(cs, len)
     cs._t0 = cs._t0 + len
     if cs._t0 < len then
-    	cs._t1 = cs._t1 + 1
+        cs._t1 = cs._t1 + 1
     end
 end
 
@@ -85,7 +85,7 @@ local function compress(cs)
     local m = {}
 
     if #cs._data < 64 then
-    	return
+        return
     end
 
     for j=1,64,4 do
@@ -130,13 +130,13 @@ end
 
 function M:new(data)
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
     local o = setmetatable({}, M_mt)
 
     o._h = {}
     for i=1,8 do
-    	o._h[i] = IV[i]:copy()
+        o._h[i] = IV[i]:copy()
     end
     -- XOR in param block. We don't support salt for
     -- personal parameters so this ends up being a constant.
@@ -148,7 +148,7 @@ function M:new(data)
     o._data = ""
 
     if data ~= nil then
-    	o:update(data)
+        o:update(data)
     end
 
     return o
@@ -158,7 +158,7 @@ setmetatable(M, { __call = M.new })
 function M:copy()
     local o = M()
     for i=1,8 do
-    	o._h[i] = self._h[i]:copy()
+        o._h[i] = self._h[i]:copy()
     end
     o._last = self._last
     o._t0 = self._t0:copy()
@@ -169,10 +169,10 @@ end
 
 function M:update(data)
     if data == nil then
-    	data = ""
+        data = ""
     end
 
-	data = tostring(data)
+    data = tostring(data)
     self._data = self._data .. data
 
     -- Update always leaves at least 1 byte for final.
@@ -194,7 +194,7 @@ function M:digest()
     compress(final)
 
     for i=1,#final._h do
-    	out[i] = final._h[i]:swape():asbytestring()
+        out[i] = final._h[i]:swape():asbytestring()
     end
 
     return table.concat(out)
@@ -206,7 +206,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

@@ -31,7 +31,7 @@ M.block_size = 8
 
 function M:new(data)
     if self ~= M then
-    	return nil, "First argument must be self"
+        return nil, "First argument must be self"
     end
     local o = setmetatable({}, M_mt)
 
@@ -39,7 +39,7 @@ function M:new(data)
     o._b2 = u32(0)
 
     if data ~= nil then
-    	o:update(data)
+        o:update(data)
     end
 
     return o
@@ -57,15 +57,15 @@ function M:update(data)
     local b
 
     if data == nil then
-    	data = ""
+        data = ""
     end
 
     data = tostring(data)
 
     for i=1,#data do
-    	b = string.byte(data, i)
-    	self._b1 = (self._b1+b) % MOD
-    	self._b2 = (self._b2+self._b1) % MOD
+        b = string.byte(data, i)
+        self._b1 = (self._b1+b) % MOD
+        self._b2 = (self._b2+self._b1) % MOD
     end
 end
 
@@ -79,7 +79,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

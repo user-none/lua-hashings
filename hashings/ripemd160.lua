@@ -299,7 +299,7 @@ function M:update(data)
     self._data = self._data .. data
 
     while #self._data >= 64 do
-    	X = {}
+        X = {}
         for j=1,64,4 do
             X[#X+1] = string.byte(self._data, j+3) << 24 |
             string.byte(self._data, j+2) << 16 |
@@ -358,7 +358,7 @@ function M:hexdigest()
 
     h = self:digest()
     for i=1,#h do
-    	out[i] = string.format("%02X", string.byte(h, i))
+        out[i] = string.format("%02X", string.byte(h, i))
     end
     return table.concat(out)
 end

@@ -7,13 +7,13 @@ local function run_hash_test(hmod, name, input, output)
     hmod = hmod()
 
     for i=1,#input do
-    	hmod:update(input[i])
+        hmod:update(input[i])
         hd = hmod:hexdigest()
 
-    	if hd == output[i] then
-        	-- Run the digest again if the output matches to verify calling digest
-        	-- doesn't update the internal data.
-        	hd = hmod:hexdigest()
+        if hd == output[i] then
+            -- Run the digest again if the output matches to verify calling digest
+            -- doesn't update the internal data.
+            hd = hmod:hexdigest()
             if hd ~= output[i] then
                 print("\tFail: " .. name .. " - digest again")
                 return false
@@ -33,11 +33,11 @@ function M.hash_runner(name, hmod, output)
     print("Hash Test: ".. name .. "...")
 
     for i=1,#hash_test_names do
-    	if output[hash_test_names[i]] == nil then
-    		print("\tOutput for test "..hash_test_names[i].." missing")
+        if output[hash_test_names[i]] == nil then
+            print("\tOutput for test "..hash_test_names[i].." missing")
         else
-    		if not run_hash_test(hmod, hash_test_names[i], hash_test_input[hash_test_names[i]], output[hash_test_names[i]]) then
-    			fail = true
+            if not run_hash_test(hmod, hash_test_names[i], hash_test_input[hash_test_names[i]], output[hash_test_names[i]]) then
+                fail = true
             end
         end
     end
@@ -58,15 +58,15 @@ function M.hmac_runner(name, hmod, output)
     print("HMAC Test: ".. name .. "...")
 
     for i=1,#hmac_test_names do
-    	tname = hmac_test_names[i]
-    	if output[tname] == nil then
-    		print("\tOutput for test "..hmac_test_names[i].." missing")
+        tname = hmac_test_names[i]
+        if output[tname] == nil then
+            print("\tOutput for test "..hmac_test_names[i].." missing")
         else
-        	j = 1
-        	input = hmac_test_input[tname]
-        	hmac = hashings.hmac(hmod, input[1])
-        	for i=2,#input do
-        		hmac:update(input[i])
+            j = 1
+            input = hmac_test_input[tname]
+            hmac = hashings.hmac(hmod, input[1])
+            for i=2,#input do
+                hmac:update(input[i])
                 hd = hmac:hexdigest()
                 if hd ~= output[tname][j] then
                     print("\tFail: " .. tname .. "(" .. tostring(j) .. ") '" .. hd .. "'")
@@ -90,14 +90,14 @@ function M.pbkdf2_runner(name, hmod, output)
     print("PBKDF2 Test: ".. name .. "...")
 
     for i=1,#pbkdf2_test_names do
-    	local tname = pbkdf2_test_names[i]
-    	if output[tname] == nil then
-    		print("\tOutput for test "..tname.." missing")
+        local tname = pbkdf2_test_names[i]
+        if output[tname] == nil then
+            print("\tOutput for test "..tname.." missing")
         else
-        	hd = hashings.pbkdf2(hmod, pbkdf2_test_input[tname][1], pbkdf2_test_input[tname][2], pbkdf2_test_input[tname][3])
+            hd = hashings.pbkdf2(hmod, pbkdf2_test_input[tname][1], pbkdf2_test_input[tname][2], pbkdf2_test_input[tname][3])
             if hd ~= output[tname] then
                 print("\tFail: " .. tname .." '"..hd.."'")
-    			fail = true
+                fail = true
             end
         end
     end
