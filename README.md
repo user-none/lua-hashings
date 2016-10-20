@@ -31,11 +31,11 @@ API
 All hash modules support the same API and any module implementing
 this API can be used by the additional hash functions.
 
-* new(data) or (data)
-* copy()
-* update(data)
-* digest()
-* hexdigest()
+* `new(data)` or `(data)`
+* `copy()`
+* `update(data)`
+* `digest()`
+* `hexdigest()`
 
 The digest and hexdigest functions will not change the internal state
 of the object. Multiple calls to these will return the same result.
@@ -44,6 +44,13 @@ All hash modules provide the following information about the hash.
 
 * digest_size
 * block_size
+
+A there are some functions, such as `hexdigest`, which are the same implementation
+in multiple modules. This is by design because modules are intended to be independent
+of the library itself. Each module can be copied into another project without needing
+the rest of the library present. The hash functions are the same in that they can
+be dropped into another project and used independent of the library provided that
+anything using the hash functions implement's the above API.
 
 Dependencies
 ------------
