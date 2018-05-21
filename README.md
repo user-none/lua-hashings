@@ -59,6 +59,13 @@ This library depnds on [lua-nums](https://github.com/user-none/lua-nums)
 because many hashes rely on fixed width integers. It's also nedded
 to support 64 bit hashes.
 
+Usage
+-----
+Here is a minimal example of usage
+
+`local digest = require("hashings.sha256")`
+`print(digest:new("Hello"):hexdigest())`
+
 Performance
 -----------
 
