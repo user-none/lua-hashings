@@ -61,9 +61,10 @@ to support 64 bit hashes.
 
 Usage
 -----
+
 Here is a minimal example of usage
 
-`local digest = require("hashings.sha256")`
+`local digest = require("hashings.sha256"); `
 `print(digest:new("Hello"):hexdigest())`
 
 Performance
