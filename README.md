@@ -62,7 +62,7 @@ to support 64 bit hashes.
 Example Use
 -----------
 
-```
+```lua
 local digest = require("hashings.sha256")
 print(digest:new("Hello"):hexdigest())
 ```
