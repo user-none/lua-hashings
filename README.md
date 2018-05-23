@@ -45,12 +45,12 @@ All hash modules provide the following information about the hash.
 * digest_size
 * block_size
 
-A there are some functions, such as `hexdigest`, which are the same implementation
+There are some functions, such as `hexdigest`, which are the same implementation
 in multiple modules. This is by design because modules are intended to be independent
 of the library itself. Each module can be copied into another project without needing
-the rest of the library present. The hash functions are the same in that they can
+the rest of the library. The hash functions are the same in that they can
 be dropped into another project and used independent of the library provided that
-anything using the hash functions implement's the above API.
+anything using the hash functions implements the above API.
 
 Dependencies
 ------------
