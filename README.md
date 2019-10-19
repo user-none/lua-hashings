@@ -105,7 +105,7 @@ local hashings = require("hashings")
 print(hashings.pbkdf2(hashings.sha256, "password", 123, 256))
 ```
 
-### Large File
+### Data from file
 
 ```lua
 local hs = require("hashings").sha256()
