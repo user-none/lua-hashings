@@ -111,7 +111,7 @@ print(hashings.pbkdf2(hashings.sha256, "password", 123, 256))
 local hs = require("hashings").sha256()
 local f = io.open("hs.lua", "rb")
 while true do
-    local r = f:read(2)
+    local r = f:read(2) # You should use are more appropriately sized buffer
     if r == nuil then
         break
     end
