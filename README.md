@@ -55,16 +55,69 @@ anything using the hash functions implements the above API.
 Dependencies
 ------------
 
-This library depnds on [lua-nums](https://github.com/user-none/lua-nums)
-because many hashes rely on fixed width integers. It's also nedded
+This library depends on [lua-nums](https://github.com/user-none/lua-nums)
+because many hashes rely on fixed width integers. It's also needed
 to support 64 bit hashes.
 
 Example Use
 -----------
 
+LUA_PATH="../lua-nums/?/init.lua;../lua-nums/?.lua;../lua-hashings/?/init.lua;../lua-hashings/?.lua;./?.lua" lua hs.lua
+
 ```lua
 local digest = require("hashings.sha256")
 print(digest:new("Hello"):hexdigest())
+```
+
+```lua
+local hashings = require("hashings")
+local hs = hashings("sha256")
+hs:update("Hello")
+print(hs:hexdigest())
+```
+
+```lua
+local mod = require("hashings").sha256
+local hs = mod()
+hs:update("Hello")
+print(hs:hexdigest())
+```
+
+### HMAC
+
+```lua
+local hashings = require("hashings")
+local hs = hashings.hmac(hashings.sha256, 'secret123', "Hello")
+print(hs:hexdigest())
+```
+
+```lua
+local hashings = require("hashings")
+local hs = hashings.hmac(hashings.sha256, 'secret123')
+hs:update("Hello")
+print(hs:hexdigest())
+```
+
+### PBKDF2
+
+```lua
+local hashings = require("hashings")
+print(hashings.pbkdf2(hashings.sha256, "password", 123, 256))
+```
+
+### Large File
+
+```lua
+local hs = require("hashings").sha256()
+local f = io.open("hs.lua", "rb")
+while true do
+    local r = f:read(2)
+    if r == nuil then
+        break
+    end
+    hs:update(r)
+end
+print(hs:hexdigest())
 ```
 
 Performance
